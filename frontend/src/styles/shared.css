@@ -1,0 +1,109 @@
+body {
+  background: #fff;
+  color: var(--color-text);
+  font-family: 'Inter', Arial, sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  transition: background 0.3s, color 0.3s;
+  position: relative;
+}
+
+.form-container {
+  background: var(--color-bg-card);
+  box-shadow: var(--color-shadow);
+  border-radius: 16px;
+  max-width: 380px;
+  margin: 8vh auto 0 auto;
+  padding: 2rem 1.5rem 1.5rem 1.5rem; 
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem; 
+  overflow: hidden;
+}
+
+.form-container h1 {
+  margin: 0 0 0.3rem 0; 
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.form-container p {
+  margin: 0 0 1rem 0; 
+  color: var(--color-label);
+  font-size: 1rem;
+  text-align: center;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem; 
+}
+
+.form-group label {
+  color: var(--color-label);
+  font-size: 0.97rem;
+  font-weight: 500;
+}
+
+.form-group input {
+  background: var(--color-input-bg);
+  border: 1.5px solid var(--color-input-border);
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  color: var(--color-text);
+  outline: none;
+  transition: border 0.2s;
+}
+
+.form-group input:focus {
+  border-color: var(--color-primary);
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+button[type="submit"] {
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.85rem 0;
+  font-size: 1.08rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s;
+}
+
+button[type="submit"] {
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.85rem 0;
+  font-size: 1.08rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1.2rem; 
+  width: 100%;        
+  transition: background 0.2s;
+}
+
+.form-footer {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.97rem;
+  color: var(--color-label);
+}
+
+.form-footer a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+}

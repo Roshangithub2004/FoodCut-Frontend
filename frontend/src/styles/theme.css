@@ -1,0 +1,11 @@
+:root {
+  --color-bg: #fff;
+  --color-bg-card: #fff;
+  --color-text: #222;
+  --color-label: #a15b00;
+  --color-input-bg: #fff7f0;
+  --color-input-border: #ffb86b;
+  --color-primary: #ff8800;
+  --color-primary-hover: #e06d00;
+  --color-shadow: 0 4px 32px 0 rgba(255, 136, 0, 0.08);
+}
