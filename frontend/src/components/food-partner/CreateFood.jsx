@@ -1,33 +1,107 @@
-import React, { useEffect, useRef, useState, useMemo} from 'react'
+import React, { useEffect, useRef, useState, useMemo } from 'react'
 import '../../styles/theme.css'
 import '../../styles/createFood.css'
-import axios  from 'axios'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const CreateFood = () => {
+
+  const navigate = useNavigate()
 
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [videoFile, setVideoFile] = useState(null)
-  const [videoURl, setvideoURl] = useState('')
+  const [videoURl, setVideoURL] = useState('')
   const [fileError, setFileError] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const fileInputRef = useRef(null)
 
-  useEffect(()=>{
-    if (!videoFile){
-      setvideoURl('')
-      return;
+  useEffect(() => {
+    if (!videoFile) {
+      setVideoURL('')
+      return
     }
 
     const url = URL.createObjectURL(videoFile)
-    setvideoURl(url)
+    setVideoURL(url)
 
-    return ()=> URL.revokeObjectURL(url)
-  },[videoFile])
+    return () => URL.revokeObjectURL(url)
+  }, [videoFile])
 
 
-  const onFilechange = (e)=>{
+  const onFilechange = (e) => {
     const file = e.target.files && e.target.files[0]
+    if (!file) {
+      setVideoFile(null)
+      setFileError('')
+      return
+    }
+
+    if (!file.type.startsWith('video/')) {
+      setFileError('Please select a valid video file')
+      return
+    }
+    setFileError('')
+    setVideoFile(file)
   }
+
+  const onDrop = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const file = e.dataTransfer?.files?.[0]
+
+    if (!file) {
+      return
+    }
+
+    if (!file.type.startsWith('video/')) {
+      setFileError('Please select a valid video file')
+      return
+    }
+    setFileError('')
+    setVideoFile(file)
+
+  }
+
+  const onDragOver = (e) => {
+    e.preventDefault()
+  }
+
+  const openFileDialog = () => fileInputRef.current?.click()
+
+  const onSubmit = async (e) => {
+    e.preventDefault()
+
+    if (!videoFile || !name.trim()) {
+      setFileError('Please add a name and a valid video file')
+      return
+    }
+
+    const formData = new FormData()
+    formData.append('name', name.trim())
+    formData.append('description', description.trim())
+    formData.append('video', videoFile)
+
+    const baseUrl = 'http://localhost:3000'
+
+    try {
+      setIsSubmitting(true)
+      const response = await axios.post(`${baseUrl}/api/food`, formData, {
+        withCredentials: true
+        
+      })
+      navigate('/')
+      console.log('Create food success:', response.data)
+      setFileError('')
+    } catch (err) {
+      console.log('Create food error:', err.response?.data || err.message)
+      setFileError(err.response?.data?.message || 'Upload failed, please try again')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const isDisabled = useMemo(() => !name.trim() || !videoFile || isSubmitting, [name, videoFile, isSubmitting])
 
   return (
     <div className="cf-page">
@@ -37,7 +111,7 @@ const CreateFood = () => {
           <div className="cf-subtitle">add a new food reel with details</div>
         </header>
 
-        <div className="cf-field">
+        <div className="cf-field" onDrop={onDrop} onDragOver={onDragOver} onClick={openFileDialog}>
           <label className="cf-label" htmlFor="food-video">
             <svg className="cf-icon" viewBox="0 0 24 24" aria-hidden="true">
               <rect x="3" y="5" width="12" height="14" rx="3" />
@@ -45,7 +119,14 @@ const CreateFood = () => {
             </svg>
             video
           </label>
-          <input id="food-video" className="cf-file" type="file" accept="video/*" />
+          <input
+            id="food-video"
+            ref={fileInputRef}
+            className="cf-file"
+            type="file"
+            accept="video/*"
+            onChange={onFilechange}
+          />
         </div>
 
         <div className="cf-field">
@@ -62,6 +143,8 @@ const CreateFood = () => {
             className="cf-input"
             type="text"
             placeholder="e.g. masala dosa"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
 
@@ -76,12 +159,16 @@ const CreateFood = () => {
             id="food-description"
             className="cf-textarea"
             placeholder="describe your food..."
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </div>
 
+        {fileError && <p className="cf-error">{fileError}</p>}
+
         <div className="cf-actions">
-          <button className="cf-button" type="button">
-            Publish food
+          <button className="cf-button" type="button" onClick={onSubmit} disabled={isDisabled}>
+            {isSubmitting ? 'Publishing...' : 'Publish food'}
           </button>
         </div>
       </section>
@@ -91,3 +178,4 @@ const CreateFood = () => {
 }
 
 export default CreateFood
+
