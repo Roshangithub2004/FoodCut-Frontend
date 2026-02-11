@@ -13,13 +13,15 @@ const FoodPartnerRegister = () =>{
     const phone = e.target.phone.value
     const email = e.target.email.value
     const password = e.target.password.value
+    const address = e.target.address.value
 
     const response = await axios.post("http://localhost:3000/api/auth/food-partner/register",{
       businessName,                   
       contactName,
       phone,
       email,
-      password
+      password,
+      address,
 
     },{withCredentials:true})
     console.log(response)
@@ -55,6 +57,10 @@ const FoodPartnerRegister = () =>{
             <label htmlFor="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Create password" required />
           </div>
+        </div>
+        <div className="form-group">
+          <label htmlFor="email">Address</label>
+          <input type="address" id="address" name="address" placeholder="Business address" required />
         </div>
         <button type="submit">Create Partner Account</button>
       </form>

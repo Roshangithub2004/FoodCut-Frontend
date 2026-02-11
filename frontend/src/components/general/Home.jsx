@@ -15,7 +15,7 @@ const Home = () =>{
     axios.get('http://localhost:3000/api/food', {withCredentials:true})
     .then(response =>{
       // console.log(response.data.foodItem)
-      setVideos(response.data.foodItem)
+      setVideos(response.data?.foodItem?? [])
     })
   },[])
 
@@ -24,11 +24,10 @@ const Home = () =>{
     {videos.map((video, idx) => (
       
       <div className="reel" key={idx}>
-        {/* {console.log('VIDEO URL:', video)} */}
+        {/* {console.log('VIDEO URL:', video.description)} */}
         {/* {console.log(`http://localhost:3000/${video.video}`)} */}
         <video
           src={video.video}
-          
           className="reel-video"
           controls={false}
           autoPlay
@@ -37,7 +36,7 @@ const Home = () =>{
           onError={() => console.log('Video failed to load:', video.video)}
         />
         <div className="reel-overlay">
-          <div className="reel-description">{video.description}</div>
+          <div className="reel-description">{video?.description?? 'No description'}</div>
           <button className="reel-btn" onClick={() =>navigate('/food-partner/' + video.foodPartner)}>
             Visit store
           </button>

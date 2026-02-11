@@ -1,0 +1,137 @@
+.fp-profile-page {
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px 40px;
+  gap: 16px;
+}
+
+.fp-profile-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--color-bg-card);
+  border-radius: 20px;
+  box-shadow: var(--color-shadow);
+  padding: 18px 16px 14px;
+}
+
+.fp-profile-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.fp-avatar {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--color-primary);
+  border: 3px solid var(--color-input-border);
+  flex-shrink: 0;
+}
+
+.fp-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.fp-pill {
+  background: var(--color-input-bg);
+  border: 1px solid var(--color-input-border);
+  color: var(--color-text);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: lowercase;
+  width: fit-content;
+}
+
+.fp-pill-muted {
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+.fp-stats {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  text-align: center;
+}
+
+.fp-stat-label {
+  font-size: 0.9rem;
+  color: var(--color-label);
+  text-transform: lowercase;
+  margin-bottom: 6px;
+}
+
+.fp-stat-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.fp-divider {
+  width: 100%;
+  max-width: 420px;
+  height: 1px;
+  background: var(--color-input-border);
+  opacity: 0.6;
+}
+
+.fp-grid {
+  width: 100%;
+  max-width: 420px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.fp-tile {
+  aspect-ratio: 3/4;
+  background: var(--color-input-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  color: var(--color-text);
+  text-transform: lowercase;
+  overflow: hidden;
+}
+
+.fp-tile span {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.fp-tile video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+@media (min-width: 768px) {
+  .fp-profile-page {
+    padding-top: 32px;
+  }
+
+  .fp-profile-card,
+  .fp-divider,
+  .fp-grid {
+    max-width: 520px;
+  }
+
+  .fp-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
