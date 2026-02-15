@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react'
+import React, { useRef, useState, useMemo } from 'react'
 import '../../styles/theme.css'
 import '../../styles/createFood.css'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { API_BASE_URL } from '../../config/api'
 
 const CreateFood = () => {
 
@@ -11,22 +12,9 @@ const CreateFood = () => {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [videoFile, setVideoFile] = useState(null)
-  const [videoURl, setVideoURL] = useState('')
   const [fileError, setFileError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const fileInputRef = useRef(null)
-
-  useEffect(() => {
-    if (!videoFile) {
-      setVideoURL('')
-      return
-    }
-
-    const url = URL.createObjectURL(videoFile)
-    setVideoURL(url)
-
-    return () => URL.revokeObjectURL(url)
-  }, [videoFile])
 
 
   const onFilechange = (e) => {
@@ -82,11 +70,9 @@ const CreateFood = () => {
     formData.append('description', description.trim())
     formData.append('video', videoFile)
 
-    const baseUrl = 'http://localhost:3000'
-
     try {
       setIsSubmitting(true)
-      const response = await axios.post(`${baseUrl}/api/food`, formData, {
+      const response = await axios.post(`${API_BASE_URL}/api/food`, formData, {
         withCredentials: true
         
       })
@@ -178,4 +164,3 @@ const CreateFood = () => {
 }
 
 export default CreateFood
-

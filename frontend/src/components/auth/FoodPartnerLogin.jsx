@@ -3,6 +3,8 @@ import '../../styles/shared.css';
 import '../../styles/theme.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { setCurrentUser } from '../../utils/savedVideos';
+import { API_BASE_URL } from '../../config/api';
 
 
 const FoodPartnerLogin = () => {
@@ -13,10 +15,15 @@ const FoodPartnerLogin = () => {
     const email = e.target.email.value
     const password = e.target.password.value
 
-    const response = await axios.post("http://localhost:3000/api/auth/food-partner/login", {
+    const response = await axios.post(`${API_BASE_URL}/api/auth/food-partner/login`, {
       email,
       password
     }, {withCredentials:true})
+    setCurrentUser({
+      id: response?.data?.foodPartner?._id ?? response?.data?.foodPartner?.id ?? '',
+      email,
+      role: 'food-partner',
+    });
     
     console.log(response)
     navigate('/create-food')

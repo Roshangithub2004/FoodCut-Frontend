@@ -3,6 +3,8 @@ import "../../styles/shared.css";
 import '../../styles/theme.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { setCurrentUser } from '../../utils/savedVideos';
+import { API_BASE_URL } from '../../config/api';
 
 const UserRegister = () => {
 
@@ -15,11 +17,16 @@ const UserRegister = () => {
     const email = e.target.email.value
     const password = e.target.password.value
 
-    const response = await axios.post('http://localhost:3000/api/auth/user/register',{
+    const response = await axios.post(`${API_BASE_URL}/api/auth/user/register`,{
       fullName,
       email,
       password
     }, {withCredentials:true})
+    setCurrentUser({
+      id: response?.data?.user?._id ?? response?.data?.user?.id ?? '',
+      email,
+      role: 'user',
+    });
     console.log(response.data)
     navigate("/")
   }
