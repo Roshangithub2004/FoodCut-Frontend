@@ -269,7 +269,7 @@ const Home = () => {
     setCommentsLoading(true);
 
     try {
-      const response = await axios.get(`${API_BASE_URL}/api/comment/food/${item._id}`, {
+      const response = await axios.get(`${API_BASE_URL}/api/comments/food/${item._id}`, {
         withCredentials: true,
       });
       const fetchedComments = Array.isArray(response?.data?.comments)
@@ -335,7 +335,7 @@ const Home = () => {
 
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/api/comment`,
+        `${API_BASE_URL}/api/commentss`,
         { foodId, comment: trimmedComment },
         { withCredentials: true }
       );
