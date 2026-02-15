@@ -335,7 +335,7 @@ const Home = () => {
 
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/api/commentss`,
+        `${API_BASE_URL}/api/comments`,
         { foodId, comment: trimmedComment },
         { withCredentials: true }
       );
