@@ -54,6 +54,7 @@ const Home = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [videos, setVideos] = useState([]);
+  const [isFeedLoading, setIsFeedLoading] = useState(true);
   const [activeCommentsFoodId, setActiveCommentsFoodId] = useState(null);
   const [commentsByFoodId, setCommentsByFoodId] = useState({});
   const [commentsLoading, setCommentsLoading] = useState(false);
@@ -65,6 +66,7 @@ const Home = () => {
     let cancelled = false;
 
     const loadVideos = async () => {
+      setIsFeedLoading(true);
       try {
         const response = await axios.get(`${API_BASE_URL}/api/food`, { withCredentials: true });
         if (cancelled) return;
@@ -94,6 +96,10 @@ const Home = () => {
         setVideos(normalized);
       } catch (error) {
         if (!cancelled) console.log('Food fetch error:', error.response?.data || error.message);
+      } finally {
+        if (!cancelled) {
+          setIsFeedLoading(false);
+        }
       }
     };
 
@@ -111,6 +117,14 @@ const Home = () => {
       document.body.style.overflow = previousOverflow;
     };
   }, [activeCommentsFoodId]);
+
+  if (isFeedLoading) {
+    return (
+      <div className="reels-container reels-loading-state">
+        <p>Loading feed...</p>
+      </div>
+    );
+  }
 
   const likeVideo = async (item) => {
     if (!item?._id) return;
