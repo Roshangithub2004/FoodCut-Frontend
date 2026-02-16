@@ -387,6 +387,41 @@ const Home = () => {
     );
   };
 
+  if (videos.length === 0) {
+    return (
+      <div className="reels-container reels-empty-state">
+        <div className="reels-empty-card">
+          <h1>FoodCut</h1>
+          <p>Choose how you want to continue.</p>
+
+          <div className="reels-auth-section">
+            <h2>User</h2>
+            <div className="reels-auth-actions">
+              <button type="button" className="reel-btn" onClick={() => navigate('/user/login')}>
+                Login
+              </button>
+              <button type="button" className="reel-btn" onClick={() => navigate('/user/register')}>
+                Register
+              </button>
+            </div>
+          </div>
+
+          <div className="reels-auth-section">
+            <h2>Food Partner</h2>
+            <div className="reels-auth-actions">
+              <button type="button" className="reel-btn" onClick={() => navigate('/food-partner/login')}>
+                Login
+              </button>
+              <button type="button" className="reel-btn" onClick={() => navigate('/food-partner/register')}>
+                Register
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="reels-container">
       {videos.map((video, idx) => {
